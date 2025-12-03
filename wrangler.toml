@@ -1,23 +1,25 @@
-#:schema node_modules/wrangler/config-schema.json
-name = "svelte5-ecommerce"
-compatibility_date = "2024-10-22"
+name = "svelte-cloudflare-template"
+account_id = "d8ee18029fb3e06794971d45b9c4a67d"
 main = ".svelte-kit/cloudflare/_worker.js"
-assets = { directory = ".svelte-kit/cloudflare", binding = "ASSETS" }
+compatibility_date = "2025-11-30"
+compatibility_flags = ["nodejs_compat"]
+assets = { binding = "ASSETS", directory = ".svelte-kit/cloudflare" }
 
 # Workers Logs
 # Docs: https://developers.cloudflare.com/workers/observability/logs/workers-logs/
 # Configuration: https://developers.cloudflare.com/workers/observability/logs/workers-logs/#enable-workers-logs
 [observability]
 enabled = true
+head_sampling_rate = 1
 
 [[d1_databases]]
 binding = "DB"
-database_name = "svelte5-ecommerceDb"
+database_name = "template-database"
 database_id = "7839da2e-8ef5-46c1-94e6-fb111d636688"
 
 [[r2_buckets]]
-binding = 'BUCKET' # <~ valid JavaScript variable name
-bucket_name = 'ecommerce-bucket'
+binding = 'BUCKET'
+bucket_name = 'template-bucket'
 
 [[kv_namespaces]]
 binding = "kv"
