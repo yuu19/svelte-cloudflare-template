@@ -4,14 +4,14 @@
 	import * as Form from '$lib/components/ui/form';
 	import { Loader2 } from 'lucide-svelte';
 	import Input from '../ui/input/input.svelte';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { zod4 } from 'sveltekit-superforms/adapters';
 	import { defaults, superForm } from 'sveltekit-superforms';
 	import { toast } from 'svelte-sonner';
 	import { registerModalState } from '$lib/states/modalState.svelte';
-	import { authClient } from '$lib/client';
-	const form = superForm(defaults(zod(registerSchema)), {
+	import { authClient } from '$lib/auth-client';
+	const form = superForm(defaults(zod4(registerSchema)), {
 		SPA: true,
-		validators: zod(registerSchema),
+		validators: zod4(registerSchema),
 		async onUpdate({ form }) {
 			if (form.valid) {
 				const { name, email, password } = form.data;
@@ -20,10 +20,12 @@
 						email,
 						password,
 						name
+						// callbackurlを指定する場合はここで指定する
 					},
 					{
 						onSuccess(ctx) {
-							toast.success('registration successful');
+							toast.success("A confirmation email has been sent. Please check your inbox.");
+							// toast.success('registration successful');
 							registerModalState.setFalse();
 						}
 					}

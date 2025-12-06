@@ -13,22 +13,22 @@
 		<Card.Root>
 			<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
 				<Card.Title class="text-sm font-medium">Total Revenue</Card.Title>
-				<ShoppingCartIcon class="h-4 w-4 text-muted-foreground" />
+				<ShoppingCartIcon class="text-muted-foreground h-4 w-4" />
 			</Card.Header>
 			<Card.Content>
 				<div class="text-2xl font-bold">{formatCurrency(data.totalRevenue)}</div>
-				<p class="text-xs text-muted-foreground">+{data.revenueGrowth}% from last month</p>
+				<p class="text-muted-foreground text-xs">+{data.revenueGrowth}% from last month</p>
 			</Card.Content>
 		</Card.Root>
 
 		<Card.Root>
 			<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
 				<Card.Title class="text-sm font-medium">New Customers</Card.Title>
-				<ArrowUpIcon class="h-4 w-4 text-muted-foreground" />
+				<ArrowUpIcon class="text-muted-foreground h-4 w-4" />
 			</Card.Header>
 			<Card.Content>
 				<div class="text-2xl font-bold">+{data.newCustomers}</div>
-				<p class="text-xs text-muted-foreground">+{data.userGrowth}% from last month</p>
+				<p class="text-muted-foreground text-xs">+{data.userGrowth}% from last month</p>
 			</Card.Content>
 		</Card.Root>
 	</div>

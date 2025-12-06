@@ -36,13 +36,13 @@
 
 		<div class="flex-1 space-y-3">
 			<div class="relative h-fit">
-				<p class="space-y-3 text-sm leading-7 text-muted-foreground md:text-base">
+				<p class="text-muted-foreground space-y-3 text-sm leading-7 md:text-base">
 					{data.product?.description}
 				</p>
 			</div>
 
 			<form
-				class="fixed bottom-0 flex w-full items-center gap-2 border bg-background p-1 px-3 py-3 md:static md:border-none md:p-4 md:px-1"
+				class="bg-background fixed bottom-0 flex w-full items-center gap-2 border p-1 px-3 py-3 md:static md:border-none md:p-4 md:px-1"
 				action="?/addToOrder"
 				method="POST"
 				use:enhance={() => {
@@ -73,12 +73,12 @@
 			>
 				<input bind:value={quantity} name="quantity" type="number" hidden />
 				<div
-					class="flex items-center justify-center gap-4 rounded-lg border border-primary/10 bg-primary/10 p-2 sm:justify-start"
+					class="border-primary/10 bg-primary/10 flex items-center justify-center gap-4 rounded-lg border p-2 sm:justify-start"
 				>
 					<Button disabled={quantity <= 1} onclick={() => quantity--} size="icon" variant="outline">
 						<Minus />
 					</Button>
-					<p class="text-xl font-normal text-primary">{quantity}</p>
+					<p class="text-primary text-xl font-normal">{quantity}</p>
 					<Button
 						disabled={!data.product.stock}
 						onclick={() => quantity++}
@@ -103,7 +103,7 @@
 				</Button>
 			</form>
 			<div class="flex items-center gap-4 text-sm">
-				<p class="text-lg text-muted-foreground">
+				<p class="text-muted-foreground text-lg">
 					{data.product.sku}
 				</p>
 				{#if data.product.stock === 0}
@@ -115,7 +115,7 @@
 
 			<div class="  pt-3">
 				<p class="text-sm font-bold">Shipping & Returns</p>
-				<p class="text-xs text-muted-foreground">
+				<p class="text-muted-foreground text-xs">
 					Standard shipping: 3 - 5 working days. Express shipping: 1 - 3 working days. Shipping
 					costs depend on delivery address and will be calculated during checkout. Returns are
 					subject to terms. Please see the RETURNS PAGE for further information.

@@ -3,6 +3,9 @@ import { sequence } from '@sveltejs/kit/hooks';
 import { svelteKitHandler } from 'better-auth/svelte-kit';
 import { createDb } from '$lib/server/db';
 import { createAuth } from '$lib/auth';
+import Database from 'better-sqlite3';
+import { drizzle as drizzleSqlite } from 'drizzle-orm/better-sqlite3';
+import * as schema from '$lib/server/db/schema';
 
 const protectedUserRoutes = ['/me', '/checkout'];
 const handleAuth: Handle = async ({ event, resolve }) => {
@@ -31,6 +34,11 @@ export const handleDb: Handle = async ({ event, resolve }) => {
 
 		event.locals.db = db;
 		event.locals.bucket = platform.env.BUCKET;
+	} else {
+		// local dev fallback to file-based sqlite
+		const sqlite = new Database('local.db');
+		const db = drizzleSqlite(sqlite, { schema });
+		event.locals.db = db as any;
 	}
 
 	return resolve(event);

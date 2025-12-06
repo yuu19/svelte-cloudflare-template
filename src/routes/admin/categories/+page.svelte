@@ -6,7 +6,6 @@
 	import { toast } from 'svelte-sonner';
 	let { data } = $props();
 	console.log('🚀 ~ data:', data);
-	
 </script>
 
 <div class="flex-1 space-y-4 p-8 pt-6">
@@ -37,23 +36,26 @@
 					<Table.Cell>{category.description || 'no description'}</Table.Cell>
 
 					<Table.Cell class="text-right">
-						<form action="?/deleteCategory" method="POST" class="inline"
-						use:enhance={({}) => {
-							return async ({ update, result }) => {
-								// Wait for the form to be updated
-								await update();
-								// Check if there's a message in the result
-								if (result.type === 'success') {
-									const data = result.data as any;
+						<form
+							action="?/deleteCategory"
+							method="POST"
+							class="inline"
+							use:enhance={({}) => {
+								return async ({ update, result }) => {
+									// Wait for the form to be updated
+									await update();
+									// Check if there's a message in the result
+									if (result.type === 'success') {
+										const data = result.data as any;
 
-									toast.success(data?.message!);
-								} else if (result.type === 'failure') {
-									const data = result.data as any;
+										toast.success(data?.message!);
+									} else if (result.type === 'failure') {
+										const data = result.data as any;
 
-									toast.error(data?.message!);
-								}
-							};
-						}}
+										toast.error(data?.message!);
+									}
+								};
+							}}
 						>
 							<input type="text" name="id" value={category.id} hidden />
 							<Button type="submit" variant="outline" size="sm">Delete</Button>

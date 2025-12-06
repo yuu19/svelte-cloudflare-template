@@ -19,7 +19,7 @@
 		{#if data}
 			{#if data.products.length > 0}
 				<div class="relative hidden basis-[200px] lg:inline-flex">
-					<div class="sticky left-0 top-[5rem] flex flex-col gap-5">
+					<div class="sticky top-[5rem] left-0 flex flex-col gap-5">
 						<FilterDesktop categories={data.categories} />
 					</div>
 				</div>
@@ -40,7 +40,7 @@
 				</div>
 			{:else}
 				<div class="grid h-[400px] w-full place-content-center place-items-center">
-					<p class="text-center text-xl font-medium text-muted-foreground">
+					<p class="text-muted-foreground text-center text-xl font-medium">
 						No Product Found in the store
 					</p>
 				</div>

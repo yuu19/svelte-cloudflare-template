@@ -5,7 +5,7 @@ import { productTable } from '$lib/server/db/schema.js';
 import { redirect } from '@sveltejs/kit';
 import { nanoid } from 'nanoid';
 import { fail, superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 
 const uploadFiles = async (files: File[], bucket: R2Bucket) => {
 	const baseTimestamp = Date.now();
@@ -28,7 +28,7 @@ export const load = async ({ locals }) => {
 	const { db } = locals;
 	const categories = await db.query.categoryTable.findMany();
 
-	const form = await superValidate(zod(productSchema));
+	const form = await superValidate(zod4(productSchema));
 	return { form, categories };
 };
 
@@ -42,7 +42,7 @@ export const actions = {
 		if (session === null || session?.user.role !== 'admin') {
 			redirect(308, '/');
 		}
-		const form = await superValidate(request, zod(productSchema));
+		const form = await superValidate(request, zod4(productSchema));
 		if (!form.valid) {
 			return fail(400, { form });
 		}

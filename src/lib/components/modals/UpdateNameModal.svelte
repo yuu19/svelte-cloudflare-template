@@ -4,19 +4,18 @@
 	import { buttonVariants } from '../ui/button';
 	import Input from '../ui/input/input.svelte';
 	import { defaults, superForm } from 'sveltekit-superforms';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { zod4 } from 'sveltekit-superforms/adapters';
 	import { updateNameSchema } from '$lib/formSchema';
 	import { Loader2 } from 'lucide-svelte';
 	import * as Form from '$lib/components/ui/form';
 	import { toast } from 'svelte-sonner';
-	import { page } from '$app/stores';
-	import { authClient } from '$lib/client';
-	let { user } = $derived($page.data);
+	import { page } from '$app/state';
+	import { authClient } from '$lib/auth-client';
 
 	let modalState = $state(false);
-	const form = superForm(defaults(user, zod(updateNameSchema)), {
+	const form = superForm(defaults(page.data.user, zod4(updateNameSchema)), {
 		SPA: true,
-		validators: zod(updateNameSchema),
+		validators: zod4(updateNameSchema),
 		dataType: 'json',
 		onUpdate: async ({ form }) => {
 			if (form.valid) {
@@ -49,7 +48,7 @@
 </script>
 
 <Dialog.Root bind:open={modalState}>
-	<Dialog.Trigger class={buttonVariants({ variant: 'link' })}>{user.name}</Dialog.Trigger>
+	<Dialog.Trigger class={buttonVariants({ variant: 'link' })}>{page.data.user.name}</Dialog.Trigger>
 	<Dialog.Content class="w-full p-3 sm:p-5">
 		<Dialog.Header class="mt-10">
 			<Dialog.Title class="font-display text-lg sm:text-xl md:text-3xl  ">Name</Dialog.Title>

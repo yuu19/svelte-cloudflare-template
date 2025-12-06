@@ -3,10 +3,10 @@ import { categorySchema } from '$lib/formSchema';
 import { categoryTable } from '$lib/server/db/schema.js';
 import { redirect } from '@sveltejs/kit';
 import { fail, superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 
 export const load = async () => {
-	const form = await superValidate(zod(categorySchema));
+	const form = await superValidate(zod4(categorySchema));
 	return {
 		form
 	};
@@ -23,7 +23,7 @@ export const actions = {
 		// if (session?.user.role !== 'admin') {
 		// 	error(401, 'sorry you are not authorized to perform this operation');
 		// }
-		const form = await superValidate(request, zod(categorySchema));
+		const form = await superValidate(request, zod4(categorySchema));
 		console.log('🚀 ~ default: ~ form:', form);
 		if (!form.valid) {
 			return fail(400, { form });

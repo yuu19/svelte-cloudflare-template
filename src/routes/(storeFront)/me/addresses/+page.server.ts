@@ -5,13 +5,13 @@ import { fail, redirect } from '@sveltejs/kit';
 import { and, or } from 'drizzle-orm';
 import { eq } from 'drizzle-orm';
 import { message, superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 
 export const load = async () => {};
 
 export const actions = {
 	addAddress: async ({ locals: { db }, request }) => {
-		const form = await superValidate(request, zod(addressSchema));
+		const form = await superValidate(request, zod4(addressSchema));
 		const auth = createAuth(db);
 		const session = await auth.api.getSession({
 			headers: request.headers

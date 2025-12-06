@@ -52,7 +52,7 @@
 							<Button
 								variant={localFilters.includes(id) ? 'default' : 'outline'}
 								onclick={() => handleFacetClick(id)}
-								class="rounded-3xl capitalize hover:border-primary"
+								class="hover:border-primary rounded-3xl capitalize"
 							>
 								{name}
 							</Button>
@@ -61,7 +61,7 @@
 				</div>
 			{/each}
 		</div>
-		<div class="sticky bottom-0 bg-background p-3">
+		<div class="bg-background sticky bottom-0 p-3">
 			<Button
 				onclick={() => {
 					open = false;
@@ -82,6 +82,6 @@
 	class="group lg:hidden "
 >
 	<SlidersHorizontal
-		class="ml-2 h-10 w-10 rounded-full bg-primary/20 p-2 transition-colors group-hover:bg-primary/30"
+		class="bg-primary/20 group-hover:bg-primary/30 ml-2 h-10 w-10 rounded-full p-2 transition-colors"
 	/>
 </Button>

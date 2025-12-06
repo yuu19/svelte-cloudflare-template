@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import { authClient } from '$lib/client';
+	import { page } from '$app/state';
+	import { authClient } from '$lib/auth-client';
 	import * as Card from '$lib/components/ui/card';
 	import * as Form from '$lib/components/ui/form';
 	import Input from '$lib/components/ui/input/input.svelte';
@@ -10,10 +10,10 @@
 	import { Loader2 } from 'lucide-svelte';
 	import { toast } from 'svelte-sonner';
 	import { defaults, superForm } from 'sveltekit-superforms';
-	import { zod } from 'sveltekit-superforms/adapters';
-	const form = superForm(defaults(zod(resetPasswordSchema)), {
+	import { zod4 } from 'sveltekit-superforms/adapters';
+	const form = superForm(defaults(zod4(resetPasswordSchema)), {
 		SPA: true,
-		validators: zod(resetPasswordSchema),
+		validators: zod4(resetPasswordSchema),
 		async onUpdate({ form }) {
 			if (form.valid) {
 				const { password } = form.data;

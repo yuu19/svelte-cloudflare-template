@@ -6,15 +6,15 @@
 	import { Loader2 } from 'lucide-svelte';
 	import { defaults, superForm } from 'sveltekit-superforms/client';
 	import { toast } from 'svelte-sonner';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { zod4 } from 'sveltekit-superforms/adapters';
 	import {
 		confirmEmailModalState,
 		requestPasswordResetModalState
 	} from '$lib/states/modalState.svelte';
-	import { authClient } from '$lib/client';
-	const form = superForm(defaults(zod(requestPasswordResetSchema)), {
+	import { authClient } from '$lib/auth-client';
+	const form = superForm(defaults(zod4(requestPasswordResetSchema)), {
 		SPA: true,
-		validators: zod(requestPasswordResetSchema),
+		validators: zod4(requestPasswordResetSchema),
 		onUpdate: async ({ form }) => {
 			if (form.valid) {
 				const { email } = form.data;
@@ -25,7 +25,7 @@
 					},
 					{
 						onSuccess() {
-							requestPasswordResetModalState.setFalse()
+							requestPasswordResetModalState.setFalse();
 							confirmEmailModalState.setTrue();
 						}
 					}

@@ -3,25 +3,26 @@
 	import { Bike, ChevronRight, CreditCard, Loader2, Minus, Plus } from 'lucide-svelte';
 	import { formatCurrency } from '$lib/utils';
 	import OrderList from '$lib/components/OrderList.svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { SHIPPING_FEE } from '$lib/constant';
-
-	const defaultAddress = $page.data.user.addresses.find((a) => {
+    import SuperDebug from 'sveltekit-superforms/SuperDebug.svelte';
+	const defaultAddress = $derived(page.data.user.addresses.find((a) => {
 		return a.isDefaultShipping === true;
-	});
+	}));
 
-	let cartItems = $derived($page.data.user?.cart?.cartItems ?? []);
+	let cartItems = $derived(page.data.user?.cart?.cartItems ?? []);
 	let totalPrice = $derived(
 		cartItems.reduce((total, item) => total + item.quantity * item.product.price, 0)
 	);
 </script>
 
+<SuperDebug data={defaultAddress} />
 <main>
 	<div
 		class="relative flex h-[400px] w-full flex-col border-b-2 bg-[url('/hero/hero-3.jpg')] bg-cover bg-fixed bg-no-repeat"
 	>
 		<div class="absolute top-[314px] z-50 h-3 w-full bg-white/5 backdrop-blur-sm sm:hidden"></div>
-		<div class="absolute left-0 top-0 z-0 h-full w-full bg-black/50"></div>
+		<div class="absolute top-0 left-0 z-0 h-full w-full bg-black/50"></div>
 
 		<div class=" pt-40 md:pt-44 lg:pt-56">
 			<div
@@ -40,7 +41,7 @@
 		<div class="flex w-full flex-col gap-10 md:gap-10 lg:gap-20">
 			<div class="flex flex-col gap-4">
 				<h4
-					class="font-display text-lg font-semibold leading-loose tracking-wide md:text-2xl lg:text-3xl"
+					class="font-display text-lg leading-loose font-semibold tracking-wide md:text-2xl lg:text-3xl"
 				>
 					Delivery method
 				</h4>
@@ -54,7 +55,7 @@
 							<p class="text-sm font-normal md:text-base">
 								{#if defaultAddress}
 									This delivery would be made to <span
-										class="font-medium capitalize text-muted-foreground"
+										class="text-muted-foreground font-medium capitalize"
 										>{defaultAddress.label}</span
 									> , (change it)
 								{:else}
@@ -80,18 +81,18 @@
 		</div>
 
 		<div class="relative z-10 mb-5 w-full lg:mt-[-7.5rem] lg:max-w-[400px]">
-			<div class="left-0 top-[6rem] flex w-full flex-col lg:sticky">
+			<div class="top-[6rem] left-0 flex w-full flex-col lg:sticky">
 				<div
-					class="flex flex-col gap-4 rounded-2xl border border-[#2021251f] bg-card p-3 lg:p-[1.5rem] lg:shadow-lg"
+					class="bg-card flex flex-col gap-4 rounded-2xl border border-[#2021251f] p-3 lg:p-[1.5rem] lg:shadow-lg"
 				>
 					<div class="flex items-center justify-between">
 						<p class="text-lg font-semibold lg:text-2xl">Prices incl. taxes</p>
 					</div>
-					<ul class="flex flex-col gap-3 border-b pb-5 pt-2">
+					<ul class="flex flex-col gap-3 border-b pt-2 pb-5">
 						<li class="flex items-center justify-between">
 							<p class="text-sm font-medium lg:text-base">Items subtotal</p>
 							<span
-								class="rounded-md bg-primary/20 px-2 py-1 text-sm font-medium text-primary lg:text-base"
+								class="bg-primary/20 text-primary rounded-md px-2 py-1 text-sm font-medium lg:text-base"
 							>
 								{formatCurrency(totalPrice)}
 							</span>
@@ -99,7 +100,7 @@
 						<li class="flex items-center justify-between">
 							<p class="text-sm font-medium lg:text-base">Delivery (Standard shipping)</p>
 							<span
-								class="rounded-md bg-primary/20 px-2 py-1 text-sm font-medium text-primary lg:text-base"
+								class="bg-primary/20 text-primary rounded-md px-2 py-1 text-sm font-medium lg:text-base"
 							>
 								{formatCurrency(SHIPPING_FEE)}
 							</span>
@@ -108,12 +109,12 @@
 					<div class="flex items-center justify-between">
 						<p class="text-sm font-medium lg:text-base">Total</p>
 						<span
-							class="rounded-md bg-primary/20 px-2 py-1 text-sm font-medium text-primary lg:text-base"
+							class="bg-primary/20 text-primary rounded-md px-2 py-1 text-sm font-medium lg:text-base"
 						>
 							{formatCurrency(totalPrice + SHIPPING_FEE)}
 						</span>
 					</div>
-					<Button class="w-full" disabled={!!defaultAddress} href="/checkout/payment"
+					<Button class="w-full" disabled={!defaultAddress} href="/checkout/payment"
 						>Proceed To Make Payment</Button
 					>
 				</div>

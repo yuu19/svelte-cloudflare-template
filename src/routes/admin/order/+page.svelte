@@ -54,7 +54,7 @@
 						<div class="flex items-center">
 							<span>{code}</span>
 							<button
-								class="ml-2 inline text-muted-foreground hover:text-primary"
+								class="text-muted-foreground hover:text-primary ml-2 inline"
 								onclick={() => {
 									navigator.clipboard.writeText(code);
 									toast.success('Copied to clipboard');

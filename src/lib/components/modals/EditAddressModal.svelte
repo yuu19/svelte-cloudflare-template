@@ -8,12 +8,12 @@
 	import { addressSchema } from '$lib/formSchema';
 	import Input from '../ui/input/input.svelte';
 	import Checkbox from '../ui/checkbox/checkbox.svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { invalidateAll } from '$app/navigation';
 	import { editAddressModalState } from '$lib/states/modalState.svelte';
-	let countries = $page.data.countries;
+	let countries = page.data.countries;
 
-	let form = superForm($page.state.form);
+	let form = superForm(page.state.form);
 
 	const { form: formData, enhance, delayed } = form;
 </script>
@@ -95,7 +95,7 @@
 						<Form.Label>Country <span class="font-bold text-red-500">*</span></Form.Label>
 						<select
 							{...props}
-							class="h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+							class="border-input bg-background ring-offset-background focus-visible:ring-primary h-10 w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
 							bind:value={$formData.country}
 						>
 							<option value="" disabled selected>Select a country</option>
@@ -119,7 +119,7 @@
 			<Form.Field
 				{form}
 				name="isDefaultShipping"
-				class="flex flex-row items-start space-x-3 space-y-0  p-4"
+				class="flex flex-row items-start space-y-0 space-x-3  p-4"
 			>
 				<Form.Control>
 					{#snippet children({ props })}
@@ -134,7 +134,7 @@
 			<Form.Field
 				{form}
 				name="isDefaultBilling"
-				class="flex flex-row items-start space-x-3 space-y-0  p-4"
+				class="flex flex-row items-start space-y-0 space-x-3  p-4"
 			>
 				<Form.Control>
 					{#snippet children({ props })}

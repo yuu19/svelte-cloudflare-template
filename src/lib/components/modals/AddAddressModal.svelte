@@ -4,16 +4,16 @@
 	import * as Form from '$lib/components/ui/form';
 	import { Loader2 } from 'lucide-svelte';
 	import { defaults, superForm } from 'sveltekit-superforms/client';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { zod4 } from 'sveltekit-superforms/adapters';
 	import { addressSchema } from '$lib/formSchema';
 	import Input from '../ui/input/input.svelte';
 	import Checkbox from '../ui/checkbox/checkbox.svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { toast } from 'svelte-sonner';
 	import { addressModalState } from '$lib/states/modalState.svelte';
 
-	const form = superForm(defaults(zod(addressSchema)), {
-		validators: zod(addressSchema),
+	const form = superForm(defaults(zod4(addressSchema)), {
+		validators: zod4(addressSchema),
 		onUpdated({ form }) {
 			const { valid, message } = form;
 			if (valid) {
@@ -79,7 +79,7 @@
 			<Form.Field
 				{form}
 				name="isDefaultShipping"
-				class="flex flex-row items-start space-x-3 space-y-0  p-4"
+				class="flex flex-row items-start space-y-0 space-x-3  p-4"
 			>
 				<Form.Control>
 					{#snippet children({ props })}
@@ -95,7 +95,7 @@
 			<Form.Field
 				{form}
 				name="isDefaultBilling"
-				class="flex flex-row items-start space-x-3 space-y-0  p-4"
+				class="flex flex-row items-start space-y-0 space-x-3  p-4"
 			>
 				<Form.Control>
 					{#snippet children({ props })}

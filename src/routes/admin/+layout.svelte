@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	// import { BellIcon, Package2Icon } from '@radix-ui/react-icons'
 	import {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import AddAddressModal from '$lib/components/modals/AddAddressModal.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
@@ -11,7 +11,7 @@
 	import type { ActionData } from './$types';
 	import { addressModalState } from '$lib/states/modalState.svelte';
 
-	let addresses = $derived($page.data.user.addresses);
+	let addresses = $derived(page.data.user.addresses);
 	let deleteModalState = $state(false);
 	let addressId = $state(0);
 </script>
@@ -21,7 +21,7 @@
 {#if addresses.length === 0}
 	<div class="flex h-[50vh] flex-col items-center justify-center text-center">
 		<h1 class="font-display text-3xl font-semibold">You haven't saved any addresses yet</h1>
-		<p class="mb-5 text-sm text-muted-foreground">Add a new address easily below</p>
+		<p class="text-muted-foreground mb-5 text-sm">Add a new address easily below</p>
 		<Button onclick={() => addressModalState.setTrue()}>Add new address</Button>
 	</div>
 {:else}
@@ -37,7 +37,7 @@
 					<Card.Header class="border-none">
 						<Card.Title class="capitalize ">{address.label}</Card.Title>
 					</Card.Header>
-					<Card.Content class="flex justify-between text-sm capitalize text-muted-foreground ">
+					<Card.Content class="text-muted-foreground flex justify-between text-sm capitalize ">
 						<div>
 							<p>{address.address}</p>
 							<p>{address.state}</p>
@@ -59,7 +59,7 @@
 								deleteModalState = true;
 							}}
 							variant="destructive"
-							class="gap-2 bg-destructive/20 text-destructive hover:bg-destructive/30 "
+							class="bg-destructive/20 text-destructive hover:bg-destructive/30 gap-2 "
 						>
 							<Trash class="size-3" />
 							<p>Remove</p>
@@ -98,7 +98,7 @@
 			</AlertDialog.Header>
 			<AlertDialog.Footer class="mt-5">
 				<AlertDialog.Cancel type="button" class="w-full">Cancel</AlertDialog.Cancel>
-				<AlertDialog.Action type="submit" class=" w-full bg-destructive hover:bg-destructive/90">
+				<AlertDialog.Action type="submit" class=" bg-destructive hover:bg-destructive/90 w-full">
 					Delete addresses</AlertDialog.Action
 				>
 			</AlertDialog.Footer>

@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 export const registerSchema = z
 	.object({
-		email: z.string().email(),
+		email: z.email(),
 		name: z.string().min(3).max(20),
 		password: z.string().min(8).max(100),
 		confirmPassword: z.string().min(8).max(100)
@@ -15,17 +15,17 @@ export const registerSchema = z
 export type RegisterSchema = typeof registerSchema;
 
 export const loginSchema = z.object({
-	email: z.string().email(),
+	email: z.email(),
 	password: z.string().min(8).max(100)
 });
 
 export type LoginSchema = typeof loginSchema;
 
 export const updateEmailSchema = z.object({
-	email: z.string().email()
+	email: z.email()
 });
 export const requestPasswordResetSchema = z.object({
-	email: z.string().email()
+	email: z.email()
 });
 
 const isValidPhoneNumber = (phone: string): boolean => {
@@ -80,7 +80,7 @@ export const updateNameSchema = z.object({
 });
 
 export const guestInformationSchema = z.object({
-	email: z.string().email(),
+	email: z.email(),
 	firstName: z.string().min(1),
 	lastName: z.string().min(1)
 });

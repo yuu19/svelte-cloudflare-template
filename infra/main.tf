@@ -14,9 +14,14 @@ resource "cloudflare_workers_kv_namespace" "kv" {
 }
 
 # Render wrangler.toml with created resource IDs so it can be copied/used directly.
+locals {
+  # Resolve wrangler template path inside the module to avoid using expressions in variable defaults.
+  wrangler_template_path = coalesce(var.wrangler_template_path, "${path.module}/wrangler.tftpl")
+}
+
 resource "local_file" "wrangler" {
   filename = var.wrangler_output_path
-  content = templatefile(var.wrangler_template_path, {
+  content = templatefile(local.wrangler_template_path, {
     name              = "svelte-cloudflare-template"
     account_id        = var.cloudflare_account_id
     main              = ".svelte-kit/cloudflare/_worker.js"

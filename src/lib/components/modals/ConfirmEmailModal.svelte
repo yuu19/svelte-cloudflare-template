@@ -24,7 +24,7 @@
 			>
 		</div>
 
-		<p class="text-center text-sm text-muted-foreground">
+		<p class="text-muted-foreground text-center text-sm">
 			Can’t find your link? Check your spam folder!
 		</p>
 	</Dialog.Content>

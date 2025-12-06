@@ -1,5 +1,4 @@
 import { createAuth } from '$lib/auth.js';
-import { cartTable, orderProductTable, orderTable } from '$lib/server/db/schema.js';
 import { redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 

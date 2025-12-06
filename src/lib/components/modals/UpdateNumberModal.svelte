@@ -2,17 +2,17 @@
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { buttonVariants } from '../ui/button';
 	import Input from '../ui/input/input.svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import * as Form from '$lib/components/ui/form';
 	import { Loader2 } from 'lucide-svelte';
 	import { defaults, superForm } from 'sveltekit-superforms/client';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { zod4 } from 'sveltekit-superforms/adapters';
 	import { updateNumberSchema } from '$lib/formSchema';
 	import { toast } from 'svelte-sonner';
-	let { user } = $derived($page.data);
+	let { user } = $derived(page.data);
 
 	let modalState = $state(false);
-	const form = superForm(defaults(zod(updateNumberSchema)));
+	const form = superForm(defaults(zod4(updateNumberSchema)));
 
 	const { form: formData, enhance, delayed } = form;
 </script>

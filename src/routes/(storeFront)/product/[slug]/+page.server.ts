@@ -1,13 +1,12 @@
 import { createAuth } from '$lib/auth.js';
 import { cartItemTable, cartTable } from '$lib/server/db/schema.js';
 import { error, fail } from '@sveltejs/kit';
-import { sql } from 'drizzle-orm';
+import { sql, and, eq } from 'drizzle-orm';
 
 export const load = async ({ locals: { db }, params }) => {
 	const { slug } = params;
 	const product = await db.query.productTable.findFirst({
-		where: (product, { eq }) => eq(product.slug, slug),
-
+		where: (product, { eq }) => eq(product.slug, slug)
 	});
 	if (!product) {
 		error(404);
@@ -76,7 +75,6 @@ export const actions = {
 		const alreadyInCart = existingCartItem?.quantity || 0;
 		const availableStock = product.stock - alreadyInCart;
 		const quantityToAdd = Math.min(quantity, availableStock);
-		
 
 		if (quantityToAdd === 0) {
 			return fail(400, {

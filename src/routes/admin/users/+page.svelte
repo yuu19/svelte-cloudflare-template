@@ -4,7 +4,7 @@
 	import * as Table from '$lib/components/ui/table';
 	import { ChevronDown } from 'lucide-svelte';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import { authClient } from '$lib/client';
+	import { authClient } from '$lib/auth-client';
 	import { toast } from 'svelte-sonner';
 	import { invalidateAll } from '$app/navigation';
 	let { data } = $props();
@@ -33,7 +33,7 @@
 			</Table.Row>
 		</Table.Header>
 		<Table.Body>
-			{#each data.users as user}
+			{#each data.users as user (user.id)}
 				<Table.Row>
 					<Table.Cell>{user.name}</Table.Cell>
 					<Table.Cell>{user.email}</Table.Cell>

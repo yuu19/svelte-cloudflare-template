@@ -3,7 +3,7 @@
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index.js';
 	import { formatCurrency } from '$lib/utils';
 	import { toast } from 'svelte-sonner';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { loadStripe } from '@stripe/stripe-js';
 	import { Elements, LinkAuthenticationElement, PaymentElement } from 'svelte-stripe';
 	import { PUBLIC_STRIPE_KEY } from '$env/static/public';
@@ -21,7 +21,7 @@
 	onMount(async () => {
 		stripe = await loadStripe(PUBLIC_STRIPE_KEY);
 	});
-	let cartItems = $derived($page.data.user?.cart?.cartItems ?? []);
+	let cartItems = $derived(page.data.user?.cart?.cartItems ?? []);
 	let totalAmount = $derived(
 		cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0)
 	);
@@ -54,7 +54,7 @@
 		} else {
 			const res = await fetch('/api/order', {
 				method: 'POST',
-				body: JSON.stringify({ cartId: $page.data.user.cart?.id })
+				body: JSON.stringify({ cartId: page.data.user.cart?.id })
 			});
 			const code = await res.text();
 			processing = false;
@@ -127,11 +127,11 @@
 					<div class="flex-1 space-y-3">
 						<p class="font-semibold capitalize">{name}</p>
 
-						<p class="text-sm text-primary">
+						<p class="text-primary text-sm">
 							{formatCurrency(price)}
 						</p>
 					</div>
-					<button class="h-10 w-10 rounded-md border-2 border-border"> {quantity} </button>
+					<button class="border-border h-10 w-10 rounded-md border-2"> {quantity} </button>
 				</div>
 			{/each}
 			<div class="space-y-5 py-5">

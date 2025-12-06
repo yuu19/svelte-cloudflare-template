@@ -4,7 +4,7 @@
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { ChevronDown, Menu, ShoppingCart } from 'lucide-svelte';
 	import { cn } from '$lib/utils';
-	import { authClient } from '$lib/client';
+	import { authClient } from '$lib/auth-client';
 	import { invalidateAll } from '$app/navigation';
 
 	import {
@@ -19,7 +19,7 @@
 	import ResetPasswordModal from './modals/ResetPasswordModal.svelte';
 	import CartSheet from './modals/CartSheet.svelte';
 	import MobileAuth from './modals/MobileAuth.svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	function getUserInitial(name: string) {
 		return name
@@ -60,7 +60,7 @@
 	>
 
 	<div class="flex items-center gap-2 md:gap-6">
-		{#if $page.data.user}
+		{#if page.data.user}
 			<DropdownMenu.Root>
 				<DropdownMenu.Trigger
 					class="flex items-center gap-3 rounded-3xl border border-border bg-muted p-1"
@@ -68,7 +68,7 @@
 					<Avatar.Root class="ring ring-primary">
 						<Avatar.Image alt="profile picture" />
 						<Avatar.Fallback class="capitalize">
-							{getUserInitial($page.data.user.name)}
+							{getUserInitial(page.data.user.name)}
 						</Avatar.Fallback>
 					</Avatar.Root>
 
@@ -78,14 +78,14 @@
 					<DropdownMenu.Label>My Account</DropdownMenu.Label>
 					<DropdownMenu.Separator />
 					<DropdownMenu.Group>
-						{#each accountPages as { title, href }}
+						{#each accountPages as { title, href } (href)}
 							<DropdownMenu.Item>
 								{#snippet child({ props })}
 									<a {href} {...props}>{title}</a>
 								{/snippet}
 							</DropdownMenu.Item>
 						{/each}
-						{#if $page.data.user.role === 'admin'}
+						{#if page.data.user.role === 'admin'}
 							<DropdownMenu.Item>
 								{#snippet child({ props })}
 									<a href="/admin" {...props}>Admin dashboard</a>
@@ -118,12 +118,12 @@
 			</button>
 		{/if}
 
-		{#if $page.data?.user?.cart?.cartItems}
+		{#if page.data?.user?.cart?.cartItems}
 			<button onclick={() => cartSheetState.setTrue()} class="relative inline-block h-fit w-fit">
 				<div
 					class="absolute -right-2 -top-2 flex size-5 items-center justify-center rounded-full bg-primary text-xs text-white"
 				>
-					{$page.data.user.cart.cartItems.length}
+					{page.data.user.cart.cartItems.length}
 				</div>
 				<ShoppingCart class="h-6 w-6" />
 			</button>
@@ -135,7 +135,7 @@
 <ConfirmEmailModal />
 <ResetPasswordModal />
 <MobileAuth />
-{#if $page.data.user?.cart?.cartItems}
+{#if page.data.user?.cart?.cartItems}
 	<CartSheet />
 {/if}
 <!-- 

@@ -5,11 +5,11 @@
 	import OrderList from '../OrderList.svelte';
 	import { cartSheetState } from '$lib/states/modalState.svelte';
 	import * as Sheet from '$lib/components/ui/sheet';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 
 	const totalPrice = $derived(
-		$page.data.user.cart?.cartItems?.reduce(
+		page.data.user.cart?.cartItems?.reduce(
 			(total, item) => total + item.quantity * item.product.price,
 			0
 		) || 0

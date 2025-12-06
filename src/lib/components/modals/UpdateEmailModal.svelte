@@ -1,18 +1,18 @@
 <script lang="ts">
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { buttonVariants } from '../ui/button';
-	import { authClient } from '$lib/client';
+	import { authClient } from '$lib/auth-client';
 	import Input from '../ui/input/input.svelte';
 	import * as Form from '$lib/components/ui/form';
 	import { updateEmailSchema } from '$lib/formSchema';
 	import { Loader2 } from 'lucide-svelte';
 	import { defaults, superForm } from 'sveltekit-superforms/client';
 	import { toast } from 'svelte-sonner';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { zod4 } from 'sveltekit-superforms/adapters';
 	let modalState = $state(false);
-	const form = superForm(defaults(zod(updateEmailSchema)), {
+	const form = superForm(defaults(zod4(updateEmailSchema)), {
 		SPA: true,
-		validators: zod(updateEmailSchema),
+		validators: zod4(updateEmailSchema),
 		onUpdate: async ({ form }) => {
 			if (form.valid) {
 				const { email } = form.data;

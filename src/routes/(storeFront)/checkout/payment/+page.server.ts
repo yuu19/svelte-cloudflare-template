@@ -20,11 +20,13 @@ export const load = async ({ parent, locals: { db }, request }) => {
 		redirect(303, '/checkout');
 	}
 
-	const totalAmount = user.cart.cartItems.reduce(
-		(total, item) => total + item.quantity * item.product.price * 100,
-		0
-	) + SHIPPING_FEE * 100
-	console.log("🚀 ~ load ~ totalAmount:", totalAmount)
+	const totalAmount =
+		user.cart.cartItems.reduce(
+			(total, item) => total + item.quantity * item.product.price * 100,
+			0
+		) +
+		SHIPPING_FEE * 100;
+	console.log('🚀 ~ load ~ totalAmount:', totalAmount);
 
 	const paymentIntent = await stripe.paymentIntents.create({
 		amount: totalAmount,
@@ -36,7 +38,7 @@ export const load = async ({ parent, locals: { db }, request }) => {
 			enabled: true
 		}
 	});
-	console.log("🚀 ~ load ~ paymentIntent:", paymentIntent)
+	console.log('🚀 ~ load ~ paymentIntent:', paymentIntent);
 	return {
 		clientSecret: paymentIntent.client_secret
 	};

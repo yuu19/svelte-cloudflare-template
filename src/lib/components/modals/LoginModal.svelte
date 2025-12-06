@@ -5,16 +5,16 @@
 	import { Loader2 } from 'lucide-svelte';
 	import { Input } from '../ui/input';
 	import { defaults, superForm } from 'sveltekit-superforms';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { zod4 } from 'sveltekit-superforms/adapters';
 	import { toast } from 'svelte-sonner';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { loginModalState, requestPasswordResetModalState } from '$lib/states/modalState.svelte';
-	import { authClient } from '$lib/client';
+	import { authClient } from '$lib/auth-client';
 
-	const form = superForm(defaults(zod(loginSchema)), {
+	const form = superForm(defaults(zod4(loginSchema)), {
 		SPA: true,
-		validators: zod(loginSchema),
+		validators: zod4(loginSchema),
 		async onUpdate({ form }) {
 			if (form.valid) {
 				const { email, password } = form.data;
@@ -27,7 +27,7 @@
 						onSuccess(ctx) {
 							toast.success('login successful');
 							loginModalState.setFalse();
-							if ($page.url.pathname === '/password-reset')
+							if (page.url.pathname === '/password-reset')
 								goto('/', {
 									invalidateAll: true
 								});
@@ -82,7 +82,7 @@
 					loginModalState.setFalse();
 					requestPasswordResetModalState.setTrue();
 				}}
-				class="text-sm text-primary"
+				class="text-primary text-sm"
 				type="button">Forgot Your password?</button
 			>
 			<Form.Button class="mt-2 w-full" type="submit"

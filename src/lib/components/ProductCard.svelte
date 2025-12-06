@@ -10,7 +10,7 @@
 	}
 
 	let { name, description, price, slug, preview }: Props = $props();
-	console.log("🚀 ~ price:", price)
+	console.log('🚀 ~ price:', price);
 </script>
 
 <a
@@ -18,7 +18,7 @@
 	href="/product/{slug}"
 >
 	<div
-		class="absolute left-0 top-1/2 h-[90%] w-[3px] -translate-y-1/2 bg-primary transition-all group-hover:w-1"
+		class="bg-primary absolute top-1/2 left-0 h-[90%] w-[3px] -translate-y-1/2 transition-all group-hover:w-1"
 	></div>
 
 	<div
@@ -26,11 +26,11 @@
 	>
 		<div class="flex flex-1 flex-col gap-6">
 			<h4 class="text-sm font-semibold capitalize lg:text-lg">{name}</h4>
-			<p class="line-clamp-2 text-xs font-medium text-muted-foreground lg:text-sm">
+			<p class="text-muted-foreground line-clamp-2 text-xs font-medium lg:text-sm">
 				{@html description}
 			</p>
 			<div>
-				<span class="w-fit rounded bg-primary/10 p-1 text-xs font-semibold text-primary lg:text-sm">
+				<span class="bg-primary/10 text-primary w-fit rounded p-1 text-xs font-semibold lg:text-sm">
 					{formatCurrency(price)}
 				</span>
 			</div>
@@ -38,7 +38,7 @@
 
 		<div class="relative h-20 w-[7.5rem] md:h-[8.125rem] md:w-[13.125rem]">
 			<img
-				class="absolute left-0 top-0 h-full w-full overflow-hidden rounded-xl object-cover"
+				class="absolute top-0 left-0 h-full w-full overflow-hidden rounded-xl object-cover"
 				src={preview || '/noImage.png'}
 				alt="productAsset"
 			/>

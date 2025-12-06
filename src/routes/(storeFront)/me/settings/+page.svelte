@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { authClient } from '$lib/client';
+	import { authClient } from '$lib/auth-client';
 	import UpdateEmailModal from '$lib/components/modals/UpdateEmailModal.svelte';
 	import UpdateNameModal from '$lib/components/modals/UpdateNameModal.svelte';
 	import UpdatePasswordModal from '$lib/components/modals/UpdatePasswordModal.svelte';

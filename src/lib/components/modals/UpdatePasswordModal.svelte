@@ -1,20 +1,20 @@
 <script lang="ts">
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { buttonVariants } from '../ui/button';
-	import { authClient } from '$lib/client';
+	import { authClient } from '$lib/auth-client';
 
 	import Input from '../ui/input/input.svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import * as Form from '$lib/components/ui/form';
 	import { updatePasswordSchema } from '$lib/formSchema';
 	import { Loader2 } from 'lucide-svelte';
 	import { defaults, superForm } from 'sveltekit-superforms/client';
 	import { toast } from 'svelte-sonner';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { zod4 } from 'sveltekit-superforms/adapters';
 	let modalState = $state(false);
-	const form = superForm(defaults(zod(updatePasswordSchema)), {
+	const form = superForm(defaults(zod4(updatePasswordSchema)), {
 		SPA: true,
-		validators: zod(updatePasswordSchema),
+		validators: zod4(updatePasswordSchema),
 		onUpdate: async ({ form }) => {
 			if (form.valid) {
 				const { currentPassword, newPassword } = form.data;

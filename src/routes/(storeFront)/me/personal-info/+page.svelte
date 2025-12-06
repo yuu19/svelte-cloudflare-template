@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	// import * as Alert from '$lib/components/ui/alert';
 
-	let { user } = $derived($page.data);
+	let { user } = $derived(page.data);
 
 	function getUserInitial(name: string) {
 		return name
@@ -32,7 +32,7 @@
 				<div
 					class="relative flex h-full w-full items-center justify-center rounded-full bg-[#FAE9C7]"
 				>
-					<p class="text-2xl font-medium capitalize text-[#b6b5b1] lg:text-4xl">
+					<p class="text-2xl font-medium text-[#b6b5b1] capitalize lg:text-4xl">
 						{getUserInitial('lawal adebola')}
 					</p>
 				</div>
@@ -40,11 +40,11 @@
 		</div>
 		<div class="flex flex-col gap-3">
 			<h1 class="font-display text-lg font-semibold capitalize md:text-2xl">
-				{$page.data.user.name}
+				{page.data.user.name}
 			</h1>
 			<div class="flex flex-col">
 				<h2 class="text-sm font-semibold md:text-base">Email</h2>
-				<p class="text-sm font-normal md:text-base">{$page.data.user.email}</p>
+				<p class="text-sm font-normal md:text-base">{page.data.user.email}</p>
 			</div>
 		</div>
 	</section>

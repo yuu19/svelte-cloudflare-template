@@ -1,12 +1,12 @@
 <!-- <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 	import { addressSchema } from '$lib/formSchema';
 	import { defaults, superForm } from 'sveltekit-superforms';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { zod4 } from 'sveltekit-superforms/adapters';
 
-	export const form = superForm(defaults(zod(addressSchema)));
+	export const form = superForm(defaults(zod4(addressSchema)));
 
 	const { form: formData, enhance, delayed } = form;
 

@@ -79,7 +79,7 @@
 		</Table.Root>
 	{:else}
 		<p
-			class="flex h-[70vh] w-full flex-col items-center justify-center gap-3 text-center text-3xl text-muted-foreground"
+			class="text-muted-foreground flex h-[70vh] w-full flex-col items-center justify-center gap-3 text-center text-3xl"
 		>
 			No products
 			<Button href="products/add">Add Product</Button>

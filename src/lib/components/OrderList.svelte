@@ -5,12 +5,12 @@
 	import { flip } from 'svelte/animate';
 	import { fly } from 'svelte/transition';
 	import Button from './ui/button/button.svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
 	import { loginModalState } from '$lib/states/modalState.svelte';
 
-	let cartItems = $derived($page.data.user.cart?.cartItems ?? []);
+	let cartItems = $derived(page.data.user.cart?.cartItems ?? []);
 </script>
 
 <div class="grid gap-4 py-4">
@@ -52,10 +52,10 @@
 				/>
 				<div class="flex-1 space-y-1">
 					<p class="font-semibold capitalize">{name}</p>
-					<p class="h-10 w-[150px] truncate text-xs text-muted-foreground">
+					<p class="text-muted-foreground h-10 w-[150px] truncate text-xs">
 						{description}
 					</p>
-					<p class="text-sm text-primary">
+					<p class="text-primary text-sm">
 						{formatCurrency(price)}
 					</p>
 				</div>
@@ -66,7 +66,7 @@
 						size="icon"><Minus /></Button
 					>
 					<button
-						class="flex h-10 w-10 items-center justify-center rounded-md border-2 border-border"
+						class="border-border flex h-10 w-10 items-center justify-center rounded-md border-2"
 					>
 						{quantity}
 					</button>
@@ -80,7 +80,7 @@
 			<Button
 				variant="outline"
 				size="sm"
-				class="w-fit border-destructive bg-destructive/5 text-destructive hover:bg-destructive/5 hover:text-destructive"
+				class="border-destructive bg-destructive/5 text-destructive hover:bg-destructive/5 hover:text-destructive w-fit"
 				formaction={`/?/deleteFromCart&productId=${productId}&cartId=${cartId}`}
 				type="submit"
 			>

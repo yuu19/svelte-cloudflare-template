@@ -52,7 +52,7 @@
 		<CheckCircle2 class="size-16 text-green-500" />
 		Order summary
 	</h1>
-	<p class="mb-10 mt-5 text-2xl">
+	<p class="mt-5 mb-10 text-2xl">
 		Your order has been received! <span class="font-medium">{data.order?.code}</span>
 	</p>
 	<div class="space-y-3 divide-y">
@@ -67,14 +67,14 @@
 				/>
 				<div class="flex-1 space-y-3">
 					<p class="font-semibold capitalize">{name}</p>
-					<p class="text-xs text-muted-foreground">
+					<p class="text-muted-foreground text-xs">
 						{sku}
 					</p>
-					<p class="text-sm text-primary">
+					<p class="text-primary text-sm">
 						{formatCurrency(price)}
 					</p>
 				</div>
-				<button class="h-10 w-10 rounded-md border-2 border-border"> {quantity} </button>
+				<button class="border-border h-10 w-10 rounded-md border-2"> {quantity} </button>
 			</div>
 		{/each}
 		<div class="space-y-5 py-5">

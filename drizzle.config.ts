@@ -1,16 +1,41 @@
 import { defineConfig } from 'drizzle-kit';
-if (!process.env.CLOUDFLARE_ACCOUNT_ID) throw new Error('CLOUDFLARE_ACCOUNT_ID is not set');
+import fs from 'node:fs';
+import path from 'node:path';
+
+function getLocalD1DB() {
+	try {
+		const basePath = path.resolve('.wrangler/state/v3/d1/miniflare-D1DatabaseObject');
+		const dbFile = fs
+			.readdirSync(basePath, { encoding: 'utf-8', recursive: true })
+			.find((f) => f.endsWith('.sqlite'));
+
+		if (!dbFile) {
+			throw new Error(`.sqlite file not found in ${basePath}`);
+		}
+
+		const url = path.resolve(basePath, dbFile);
+		return url;
+	} catch (err) {
+		console.log(`Error  ${err}`);
+	}
+}
 
 export default defineConfig({
-	schema: './src/lib/server/db/schema.ts',
-	dbCredentials: {
-		accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
-		token: process.env.CLOUDFLARE_TOKEN!,
-		databaseId: process.env.CLOUDFLARE_DATABASE_ID!
-	},
-	verbose: true,
-	strict: true,
 	dialect: 'sqlite',
+	schema: './src/lib/server/db/schema.ts',
 	out: './migrations',
-	driver: 'd1-http'
+	...(process.env.NODE_ENV === 'production'
+		? {
+			driver: 'd1-http',
+			dbCredentials: {
+				accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
+				databaseId: process.env.CLOUDFLARE_DATABASE_ID!,
+				token: process.env.CLOUDFLARE_D1_TOKEN!
+			}
+		}
+		: {
+				dbCredentials: {
+					url: getLocalD1DB()
+				}
+			})
 });

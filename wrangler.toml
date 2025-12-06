@@ -5,9 +5,6 @@ compatibility_date = "2025-11-30"
 compatibility_flags = ["nodejs_compat"]
 assets = { binding = "ASSETS", directory = ".svelte-kit/cloudflare" }
 
-# Workers Logs
-# Docs: https://developers.cloudflare.com/workers/observability/logs/workers-logs/
-# Configuration: https://developers.cloudflare.com/workers/observability/logs/workers-logs/#enable-workers-logs
 [observability]
 enabled = true
 head_sampling_rate = 1
@@ -15,12 +12,12 @@ head_sampling_rate = 1
 [[d1_databases]]
 binding = "DB"
 database_name = "template-database"
-database_id = "7839da2e-8ef5-46c1-94e6-fb111d636688"
+database_id = "10f70983-c171-4c14-83fa-0fe991fb430e"
 
 [[r2_buckets]]
-binding = 'BUCKET'
-bucket_name = 'template-bucket'
+binding = "BUCKET"
+bucket_name = "template-bucket"
 
 [[kv_namespaces]]
 binding = "kv"
-id = "b94e953b8dca40fcbda63729dab66d54"
+id = "9fb337a9b93f459ab54640ad251aee01"

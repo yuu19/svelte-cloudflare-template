@@ -36,5 +36,6 @@ variable "wrangler_output_path" {
 variable "wrangler_template_path" {
   type        = string
   description = "Template file for wrangler.toml rendering."
-  default     = "${path.module}/wrangler.tftpl"
+  # Allow override, otherwise resolved in locals using path.module.
+  default     = null
 }

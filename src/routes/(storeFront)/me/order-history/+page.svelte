@@ -14,11 +14,11 @@
 {#if orders?.length > 0}
 	{#each orders ?? [] as { createdAt, amount, code, status, orderProducts }}
 		<Collapsible.Root class=" mb-2">
-			<div class="flex items-center justify-between rounded-md bg-muted p-5">
+			<div class="bg-muted flex items-center justify-between rounded-md p-5">
 				<div class="flex flex-wrap items-center justify-between gap-3 md:gap-10">
 					<div class="">
 						<p class="text-sm font-medium capitalize">Date placed</p>
-						<p class="text-xs text-muted-foreground">
+						<p class="text-muted-foreground text-xs">
 							{new Intl.DateTimeFormat('en-US', {
 								year: 'numeric',
 								month: 'short',
@@ -28,13 +28,13 @@
 					</div>
 					<div>
 						<p class="text-sm font-medium capitalize">Total sum</p>
-						<p class="text-xs text-muted-foreground">
+						<p class="text-muted-foreground text-xs">
 							{formatCurrency(amount)}
 						</p>
 					</div>
 					<div>
 						<p class="text-sm font-medium capitalize">Order number</p>
-						<p class="text-xs text-muted-foreground">{code}</p>
+						<p class="text-muted-foreground text-xs">{code}</p>
 					</div>
 					<div class="">
 						<p class="text-sm font-medium capitalize">Status</p>

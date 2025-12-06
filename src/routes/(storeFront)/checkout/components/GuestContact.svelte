@@ -4,14 +4,14 @@
 	import { guestInformationSchema } from '$lib/formSchema';
 
 	import { defaults, superForm } from 'sveltekit-superforms';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { zod4 } from 'sveltekit-superforms/adapters';
 
-	export const form = superForm(defaults(zod(guestInformationSchema)));
+	export const form = superForm(defaults(zod4(guestInformationSchema)));
 	const { form: formData, enhance } = form;
 </script>
 
 <form method="POST" use:enhance>
-	<p class="mb-10 text-lg font-medium capitalize text-muted-foreground">Contact information</p>
+	<p class="text-muted-foreground mb-10 text-lg font-medium capitalize">Contact information</p>
 	<Form.Field {form} name="email">
 		<Form.Control>
 			{#snippet children({ props })}

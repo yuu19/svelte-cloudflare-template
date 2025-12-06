@@ -27,10 +27,9 @@ export const actions = {
 			return fail(400, { message: 'Invalid id' });
 		}
 
-	await db.delete(categoryTable).where(eq(categoryTable.id, id))
-	return {
-		message: 'deleted category with all the related products'
-	};
-		
+		await db.delete(categoryTable).where(eq(categoryTable.id, id));
+		return {
+			message: 'deleted category with all the related products'
+		};
 	}
 };

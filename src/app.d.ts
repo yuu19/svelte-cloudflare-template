@@ -1,5 +1,6 @@
 import type { TCart, TCartItem, TProduct, TUser } from '$lib/types';
 import type { DrizzleD1Database } from 'drizzle-orm/d1';
+import type { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
 
 // for information about these interfaces
 type Schema = typeof import('./lib/server/db/schema');
@@ -16,7 +17,7 @@ declare global {
 		}
 
 		interface Locals {
-			db: DrizzleD1Database<Schema>;
+			db: DrizzleD1Database<Schema> | BetterSQLite3Database<Schema>;
 			bucket: R2Bucket;
 		}
 		interface PageData {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { Button } from '$lib/components/ui/button';
 	import { cn } from '$lib/utils';
 
@@ -24,7 +24,7 @@
 			txt: 'Settings'
 		}
 	];
-	let path = $derived($page.url.pathname.split('/').slice(2, 3).toString());
+	let path = $derived(page.url.pathname.split('/').slice(2, 3).toString());
 </script>
 
 <div class="mx-auto mt-10 w-full max-w-4xl px-3">

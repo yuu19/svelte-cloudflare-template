@@ -22,7 +22,7 @@
 						style:background-image="url({pic})"
 					>
 						<div class="absolute inset-0 bg-gradient-to-br from-black/20 to-black/80"></div>
-						<div class="absolute bottom-0 right-0 z-10 mb-14 px-5 md:mb-20 md:px-10">
+						<div class="absolute right-0 bottom-0 z-10 mb-14 px-5 md:mb-20 md:px-10">
 							<h1 class="mb-1 text-2xl font-bold text-white md:mb-3 md:text-6xl">
 								Goods and more delivered to your door
 							</h1>
@@ -41,7 +41,7 @@
 
 	<section class="mt-20">
 		<h2 class="text-2xl font-bold md:text-4xl">What We offer</h2>
-		<p class="mt-2 text-sm text-muted-foreground md:mt-3 md:text-base">
+		<p class="text-muted-foreground mt-2 text-sm md:mt-3 md:text-base">
 			With our fast and reliable delivery service, you can have your favorite items delivered right
 			to your doorstep. Start shopping today and experience the convenience of online shopping with
 			us.
