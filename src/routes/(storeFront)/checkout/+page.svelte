@@ -5,10 +5,12 @@
 	import OrderList from '$lib/components/OrderList.svelte';
 	import { page } from '$app/state';
 	import { SHIPPING_FEE } from '$lib/constant';
-    import SuperDebug from 'sveltekit-superforms/SuperDebug.svelte';
-	const defaultAddress = $derived(page.data.user.addresses.find((a) => {
-		return a.isDefaultShipping === true;
-	}));
+	import SuperDebug from 'sveltekit-superforms/SuperDebug.svelte';
+	const defaultAddress = $derived(
+		page.data.user.addresses.find((a) => {
+			return a.isDefaultShipping === true;
+		})
+	);
 
 	let cartItems = $derived(page.data.user?.cart?.cartItems ?? []);
 	let totalPrice = $derived(

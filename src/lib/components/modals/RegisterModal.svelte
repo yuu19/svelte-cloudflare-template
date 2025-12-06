@@ -24,7 +24,7 @@
 					},
 					{
 						onSuccess(ctx) {
-							toast.success("A confirmation email has been sent. Please check your inbox.");
+							toast.success('A confirmation email has been sent. Please check your inbox.');
 							// toast.success('registration successful');
 							registerModalState.setFalse();
 						}

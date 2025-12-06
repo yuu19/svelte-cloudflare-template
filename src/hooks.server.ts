@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/sveltekit';
+import { sentryHandle, initCloudflareSentryHandle } from '@sentry/sveltekit';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import { svelteKitHandler } from 'better-auth/svelte-kit';
@@ -51,4 +53,25 @@ const preloadFonts: Handle = async ({ event, resolve }) => {
 
 	return response;
 };
-export const handle = sequence(preloadFonts, handleDb, handleAuth);
+const serverDsn = process.env.SENTRY_DSN;
+const sentryHandleConfigured: Handle | undefined = serverDsn
+	? initCloudflareSentryHandle({
+			dsn: serverDsn,
+			// Adds request headers and IP for users, for more info visit:
+			// https://docs.sentry.io/platforms/javascript/guides/sveltekit/configuration/options/#sendDefaultPii
+			sendDefaultPii: true,
+			// Capture 100% of transactions for tracing (tune in prod)
+			tracesSampleRate: 1.0,
+			// Enable logs to be sent to Sentry
+			enableLogs: true
+		})
+	: undefined;
+const noopHandle: Handle = async ({ event, resolve }) => resolve(event);
+
+export const handle = sequence(
+	sentryHandleConfigured ?? noopHandle,
+	sentryHandle(),
+	preloadFonts,
+	handleDb,
+	handleAuth
+);

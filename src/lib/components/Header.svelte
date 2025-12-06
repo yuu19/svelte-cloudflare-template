@@ -51,11 +51,11 @@
 
 <header
 	class={cn(
-		'sticky left-0 top-0 z-50 flex items-center justify-between border bg-background px-3 py-3 md:px-10'
+		'bg-background sticky top-0 left-0 z-50 flex items-center justify-between border px-3 py-3 md:px-10'
 	)}
 >
 	<a href="/" class="text-2xl capitalize">
-		<span class="font-bold text-primary">Svelte</span>
+		<span class="text-primary font-bold">Svelte</span>
 		store front</a
 	>
 
@@ -63,9 +63,9 @@
 		{#if page.data.user}
 			<DropdownMenu.Root>
 				<DropdownMenu.Trigger
-					class="flex items-center gap-3 rounded-3xl border border-border bg-muted p-1"
+					class="border-border bg-muted flex items-center gap-3 rounded-3xl border p-1"
 				>
-					<Avatar.Root class="ring ring-primary">
+					<Avatar.Root class="ring-primary ring">
 						<Avatar.Image alt="profile picture" />
 						<Avatar.Fallback class="capitalize">
 							{getUserInitial(page.data.user.name)}
@@ -112,7 +112,7 @@
 				onclick={() => {
 					mobileAuthState.setTrue();
 				}}
-				class="flex size-10 items-center justify-center rounded-full hover:bg-secondary md:hidden"
+				class="hover:bg-secondary flex size-10 items-center justify-center rounded-full md:hidden"
 			>
 				<Menu class="size-6 " />
 			</button>
@@ -121,7 +121,7 @@
 		{#if page.data?.user?.cart?.cartItems}
 			<button onclick={() => cartSheetState.setTrue()} class="relative inline-block h-fit w-fit">
 				<div
-					class="absolute -right-2 -top-2 flex size-5 items-center justify-center rounded-full bg-primary text-xs text-white"
+					class="bg-primary absolute -top-2 -right-2 flex size-5 items-center justify-center rounded-full text-xs text-white"
 				>
 					{page.data.user.cart.cartItems.length}
 				</div>

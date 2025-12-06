@@ -5,12 +5,15 @@ import { admin } from 'better-auth/plugins';
 import type { DrizzleD1Database } from 'drizzle-orm/d1';
 import type { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
 import { sveltekitCookies } from 'better-auth/svelte-kit';
-import Database from "better-sqlite3";
+import Database from 'better-sqlite3';
 import { getRequestEvent } from '$app/server';
-import { sendVerificationEmail, sendMagicLinkEmail, sendChangeEmailConfirmation } from '$lib/server/email';
+import {
+	sendVerificationEmail,
+	sendMagicLinkEmail,
+	sendChangeEmailConfirmation
+} from '$lib/server/email';
 import * as schema from './server/db/schema';
 type Schema = typeof import('./server/db/schema');
-
 
 export function createAuth(db: DrizzleD1Database<Schema> | BetterSQLite3Database<Schema>) {
 	return betterAuth({
@@ -29,13 +32,13 @@ export function createAuth(db: DrizzleD1Database<Schema> | BetterSQLite3Database
 		emailVerification: {
 			sendOnSignUp: true,
 			autoSignInAfterVerification: true,
-            sendVerificationEmail: async (data, request) => {  
-                try {  
-                    await sendVerificationEmail(data);  
-                } catch (error) {  
-                    console.error('Failed to send verification email:', error);  
-                }  
-            }  
+			sendVerificationEmail: async (data, request) => {
+				try {
+					await sendVerificationEmail(data);
+				} catch (error) {
+					console.error('Failed to send verification email:', error);
+				}
+			}
 		},
 
 		// Magic Link プラグイン
@@ -58,11 +61,10 @@ export function createAuth(db: DrizzleD1Database<Schema> | BetterSQLite3Database
 		user: {
 			changeEmail: {
 				enabled: true,
-				sendChangeEmailConfirmation: async ({ user, newEmail, url, token }, request) => {  
-                  await sendChangeEmailConfirmation({ user, newEmail, url, token });  
-                }  
+				sendChangeEmailConfirmation: async ({ user, newEmail, url, token }, request) => {
+					await sendChangeEmailConfirmation({ user, newEmail, url, token });
+				}
 			}
-		
 		}
 	});
 }
