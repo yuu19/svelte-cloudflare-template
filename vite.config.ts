@@ -10,14 +10,14 @@ export default defineConfig({
 		sentrySvelteKit(),
 		tailwindcss(),
 		sveltekit(),
-	paraglideVitePlugin({
-		project: './project.inlang',
-		outdir: './src/lib/paraglide',
-		// Prefer persisted user choice, fall back to URL, then base locale
-		strategy: ['localStorage', 'cookie', 'url', 'baseLocale'],
-		// Cloudflare/edge friendly: avoid AsyncLocalStorage
-		disableAsyncLocalStorage: true
-	})
+		paraglideVitePlugin({
+			project: './project.inlang',
+			outdir: './src/lib/paraglide',
+			// Prefer persisted user choice, fall back to URL, then base locale
+			strategy: ['localStorage', 'cookie', 'url', 'baseLocale'],
+			// Cloudflare/edge friendly: avoid AsyncLocalStorage
+			disableAsyncLocalStorage: true
+		})
 	],
 	test: {
 		expect: { requireAssertions: true },

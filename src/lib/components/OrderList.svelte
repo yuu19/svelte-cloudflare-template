@@ -9,6 +9,7 @@
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
 	import { loginModalState } from '$lib/states/modalState.svelte';
+	import { m } from '$lib/paraglide/messages.js';
 
 	let cartItems = $derived(page.data.user.cart?.cartItems ?? []);
 </script>
@@ -86,7 +87,7 @@
 			>
 				<Trash class="mr-3 size-4 " />
 
-				Delete item
+				{m.cart_delete_item()}
 			</Button>
 		</form>
 	{/each}

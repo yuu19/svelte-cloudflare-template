@@ -7,6 +7,7 @@
 	} from '$lib/states/modalState.svelte';
 
 	import Button from '../ui/button/button.svelte';
+import { m } from '$lib/paraglide/messages.js';
 </script>
 
 <Dialog.Root bind:open={mobileAuthState.value}>
@@ -17,13 +18,13 @@
 				mobileAuthState.setFalse();
 				loginModalState.setTrue();
 			}}
-			variant="secondary">Login</Button
+			variant="secondary">{m.mobile_auth_login()}</Button
 		>
 		<Button
 			onclick={() => {
 				mobileAuthState.setFalse();
 				registerModalState.setTrue();
-			}}>Register</Button
+			}}>{m.mobile_auth_register()}</Button
 		>
 	</Dialog.Content>
 </Dialog.Root>

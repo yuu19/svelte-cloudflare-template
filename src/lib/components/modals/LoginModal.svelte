@@ -11,6 +11,7 @@
 	import { goto } from '$app/navigation';
 	import { loginModalState, requestPasswordResetModalState } from '$lib/states/modalState.svelte';
 	import { authClient } from '$lib/auth-client';
+import { m } from '$lib/paraglide/messages.js';
 
 	const form = superForm(defaults(zod4(loginSchema)), {
 		SPA: true,
@@ -25,7 +26,7 @@
 					},
 					{
 						onSuccess(ctx) {
-							toast.success('login successful');
+						toast.success(m.login_success());
 							loginModalState.setFalse();
 							if (page.url.pathname === '/password-reset')
 								goto('/', {
@@ -51,30 +52,30 @@
 <Dialog.Root bind:open={loginModalState.value}>
 	<Dialog.Content class="w-full p-5">
 		<Dialog.Header class="mt-10">
-			<Dialog.Title class="font-display text-3xl ">Log in to your account</Dialog.Title>
+			<Dialog.Title class="font-display text-3xl ">{m.login_title()}</Dialog.Title>
 			<Dialog.Description>
-				Enter your email and password to log in. Click login when you're ready.
+				{m.login_desc()}
 			</Dialog.Description>
 		</Dialog.Header>
 		<form method="post" use:enhance>
 			<Form.Field {form} name="email">
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>Email</Form.Label>
+						<Form.Label>{m.login_email_label()}</Form.Label>
 						<Input {...props} bind:value={$formData.email} />
 					{/snippet}
 				</Form.Control>
-				<Form.Description>This is your email.</Form.Description>
+				<Form.Description>{m.login_email_desc()}</Form.Description>
 				<Form.FieldErrors />
 			</Form.Field>
 			<Form.Field {form} name="password">
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>Password</Form.Label>
+						<Form.Label>{m.login_password_label()}</Form.Label>
 						<Input {...props} bind:value={$formData.password} type="password" />
 					{/snippet}
 				</Form.Control>
-				<Form.Description>Input your password here</Form.Description>
+				<Form.Description>{m.login_password_desc()}</Form.Description>
 				<Form.FieldErrors />
 			</Form.Field>
 			<button
@@ -83,13 +84,13 @@
 					requestPasswordResetModalState.setTrue();
 				}}
 				class="text-primary text-sm"
-				type="button">Forgot Your password?</button
+				type="button">{m.login_forgot()}</button
 			>
 			<Form.Button class="mt-2 w-full" type="submit"
 				>{#if $delayed}
 					<Loader2 class="size-6 animate-spin " />
 				{:else}
-					Login
+					{m.login_submit()}
 				{/if}</Form.Button
 			>
 		</form>

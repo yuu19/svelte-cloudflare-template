@@ -9,6 +9,7 @@
 	import { defaults, superForm } from 'sveltekit-superforms/client';
 	import { toast } from 'svelte-sonner';
 	import { zod4 } from 'sveltekit-superforms/adapters';
+import { m } from '$lib/paraglide/messages.js';
 	let modalState = $state(false);
 	const form = superForm(defaults(zod4(updateEmailSchema)), {
 		SPA: true,
@@ -22,7 +23,7 @@
 					},
 					{
 						onSuccess(ctx) {
-							toast.success('Email updated successfully');
+							toast.success(m.update_email_success());
 							modalState = false;
 						}
 					}
@@ -42,20 +43,20 @@
 </script>
 
 <Dialog.Root bind:open={modalState}>
-	<Dialog.Trigger class={buttonVariants({ variant: 'link' })}>Change Email</Dialog.Trigger>
+	<Dialog.Trigger class={buttonVariants({ variant: 'link' })}>{m.update_email_trigger()}</Dialog.Trigger>
 	<Dialog.Content class="w-full p-3 sm:p-5">
 		<Dialog.Header class="mt-10">
-			<Dialog.Title class="font-display text-3xl ">Change Email</Dialog.Title>
+			<Dialog.Title class="font-display text-3xl ">{m.update_email_title()}</Dialog.Title>
 		</Dialog.Header>
 		<form method="post" use:enhance>
 			<Form.Field {form} name="email">
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>Email</Form.Label>
+						<Form.Label>{m.update_email_label()}</Form.Label>
 						<Input {...props} bind:value={$formData.email} />
 					{/snippet}
 				</Form.Control>
-				<Form.Description>This is your new email.</Form.Description>
+				<Form.Description>{m.update_email_desc()}</Form.Description>
 				<Form.FieldErrors />
 			</Form.Field>
 
@@ -63,7 +64,7 @@
 				>{#if $delayed}
 					<Loader2 class="size-6 animate-spin " />
 				{:else}
-					Update Email
+					{m.update_email_submit()}
 				{/if}</Form.Button
 			>
 		</form>

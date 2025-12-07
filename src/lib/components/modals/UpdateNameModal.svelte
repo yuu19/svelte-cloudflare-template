@@ -11,6 +11,7 @@
 	import { toast } from 'svelte-sonner';
 	import { page } from '$app/state';
 	import { authClient } from '$lib/auth-client';
+import { m } from '$lib/paraglide/messages.js';
 
 	let modalState = $state(false);
 	const form = superForm(defaults(page.data.user, zod4(updateNameSchema)), {
@@ -27,7 +28,7 @@
 					},
 					{
 						onSuccess(ctx) {
-							toast.success('name updated successfully');
+							toast.success(m.update_name_success());
 							modalState = false;
 						}
 					}
@@ -51,14 +52,14 @@
 	<Dialog.Trigger class={buttonVariants({ variant: 'link' })}>{page.data.user.name}</Dialog.Trigger>
 	<Dialog.Content class="w-full p-3 sm:p-5">
 		<Dialog.Header class="mt-10">
-			<Dialog.Title class="font-display text-lg sm:text-xl md:text-3xl  ">Name</Dialog.Title>
+			<Dialog.Title class="font-display text-lg sm:text-xl md:text-3xl  ">{m.update_name_title()}</Dialog.Title>
 		</Dialog.Header>
 
 		<form class="mt-5 flex flex-col gap-5" method="post" use:enhance>
 			<Form.Field {form} name="name">
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>Username</Form.Label>
+						<Form.Label>{m.update_name_label()}</Form.Label>
 
 						<Input {...props} bind:value={$formData.name} />
 					{/snippet}
@@ -71,7 +72,7 @@
 					{#if $delayed}
 						<Loader2 class="size-6 animate-spin " />
 					{:else}
-						Save
+						{m.update_name_submit()}
 					{/if}
 				</Button>
 			</div>

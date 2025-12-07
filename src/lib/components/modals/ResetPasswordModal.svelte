@@ -12,6 +12,7 @@
 		requestPasswordResetModalState
 	} from '$lib/states/modalState.svelte';
 	import { authClient } from '$lib/auth-client';
+import { m } from '$lib/paraglide/messages.js';
 	const form = superForm(defaults(zod4(requestPasswordResetSchema)), {
 		SPA: true,
 		validators: zod4(requestPasswordResetSchema),
@@ -48,17 +49,17 @@
 <Dialog.Root bind:open={requestPasswordResetModalState.value}>
 	<Dialog.Content class="w-full p-3 sm:p-5">
 		<Dialog.Header class="mt-10">
-			<Dialog.Title class="font-display text-3xl ">Request to reset your password</Dialog.Title>
+			<Dialog.Title class="font-display text-3xl ">{m.reset_title()}</Dialog.Title>
 		</Dialog.Header>
 		<form method="post" use:enhance>
 			<Form.Field {form} name="email">
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>Email</Form.Label>
+						<Form.Label>{m.reset_email_label()}</Form.Label>
 						<Input {...props} bind:value={$formData.email} />
 					{/snippet}
 				</Form.Control>
-				<Form.Description>place in your email</Form.Description>
+				<Form.Description>{m.reset_email_desc()}</Form.Description>
 				<Form.FieldErrors />
 			</Form.Field>
 
@@ -66,7 +67,7 @@
 				>{#if $delayed}
 					<Loader2 class="size-6 animate-spin " />
 				{:else}
-					Request password reset
+					{m.reset_submit()}
 				{/if}</Form.Button
 			>
 		</form>

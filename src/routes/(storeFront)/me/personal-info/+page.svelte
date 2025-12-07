@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	// import * as Alert from '$lib/components/ui/alert';
+	import { m } from '$lib/paraglide/messages.js';
 
 	let { user } = $derived(page.data);
 
@@ -43,7 +43,7 @@
 				{page.data.user.name}
 			</h1>
 			<div class="flex flex-col">
-				<h2 class="text-sm font-semibold md:text-base">Email</h2>
+				<h2 class="text-sm font-semibold md:text-base">{m.profile_email_label()}</h2>
 				<p class="text-sm font-normal md:text-base">{page.data.user.email}</p>
 			</div>
 		</div>

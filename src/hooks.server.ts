@@ -71,7 +71,6 @@ const sentryHandleConfigured: Handle | undefined = serverDsn
 	: undefined;
 const noopHandle: Handle = async ({ event, resolve }) => resolve(event);
 
-
 const handleParaglide: Handle = ({ event, resolve }) =>
 	paraglideMiddleware(event.request, ({ request, locale }) => {
 		event.request = request;

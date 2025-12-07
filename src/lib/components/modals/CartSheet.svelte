@@ -7,6 +7,7 @@
 	import * as Sheet from '$lib/components/ui/sheet';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
+	import { m } from '$lib/paraglide/messages.js';
 
 	const totalPrice = $derived(
 		page.data.user.cart?.cartItems?.reduce(
@@ -22,11 +23,11 @@
 		side="right"
 	>
 		<Sheet.Header>
-			<Sheet.Title class="font-display mb-5 text-3xl ">Your Order</Sheet.Title>
+			<Sheet.Title class="font-display mb-5 text-3xl ">{m.cart_title()}</Sheet.Title>
 		</Sheet.Header>
 		<OrderList />
 		<p class="my-5 capitalize md:my-0">
-			total : <span class="font-semibold">{formatCurrency(totalPrice)}</span>
+			{m.cart_total()} : <span class="font-semibold">{formatCurrency(totalPrice)}</span>
 		</p>
 		<Sheet.Footer>
 			<Button
@@ -35,7 +36,7 @@
 					cartSheetState.setFalse();
 					goto('/checkout');
 				}}
-				>Proceed To Checkout <ShoppingBasket class="ml-3 " />
+				>{m.cart_checkout()} <ShoppingBasket class="ml-3 " />
 			</Button>
 		</Sheet.Footer>
 	</Sheet.Content>

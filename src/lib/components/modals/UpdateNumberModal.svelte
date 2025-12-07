@@ -9,6 +9,7 @@
 	import { zod4 } from 'sveltekit-superforms/adapters';
 	import { updateNumberSchema } from '$lib/formSchema';
 	import { toast } from 'svelte-sonner';
+import { m } from '$lib/paraglide/messages.js';
 	let { user } = $derived(page.data);
 
 	let modalState = $state(false);
@@ -20,14 +21,14 @@
 <Dialog.Root bind:open={modalState}>
 	<Dialog.Trigger class={buttonVariants({ variant: 'link' })}>
 		{#if false}
-			09099887876
+			{m.update_number_trigger_has()}
 		{:else}
-			No number
+			{m.update_number_trigger_none()}
 		{/if}
 	</Dialog.Trigger>
 	<Dialog.Content class="w-full   p-3 sm:p-5">
 		<Dialog.Header class="mt-10">
-			<Dialog.Title class="font-display text-lg sm:text-xl md:text-3xl  ">Phone number</Dialog.Title
+			<Dialog.Title class="font-display text-lg sm:text-xl md:text-3xl  ">{m.update_number_title()}</Dialog.Title
 			>
 		</Dialog.Header>
 		<form method="POST" use:enhance>
@@ -37,14 +38,14 @@
 						<Input {...props} bind:value={$formData.number} />
 					{/snippet}
 				</Form.Control>
-				<Form.Description>your phone number</Form.Description>
+				<Form.Description>{m.update_number_desc()}</Form.Description>
 				<Form.FieldErrors />
 			</Form.Field>
 			<Form.Button class="mt-2 w-full"
 				>{#if $delayed}
 					<Loader2 class="size-6 animate-spin " />
 				{:else}
-					Update phone number
+					{m.update_number_submit()}
 				{/if}</Form.Button
 			>
 		</form>

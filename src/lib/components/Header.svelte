@@ -19,8 +19,9 @@
 	import ResetPasswordModal from './modals/ResetPasswordModal.svelte';
 	import CartSheet from './modals/CartSheet.svelte';
 	import MobileAuth from './modals/MobileAuth.svelte';
-import { page } from '$app/state';
-import LanguageSwitcher from './LanguageSwitcher.svelte';
+	import { page } from '$app/state';
+	import LanguageSwitcher from './LanguageSwitcher.svelte';
+	import { m } from '$lib/paraglide/messages.js';
 
 	function getUserInitial(name: string) {
 		return name
@@ -29,22 +30,21 @@ import LanguageSwitcher from './LanguageSwitcher.svelte';
 			.join('');
 	}
 	// const session = authClient.useSession();
-	let accountPages = [
+	const accountPages = [
 		{
-			title: 'Profile',
+			title: () => m.nav_profile(),
 			href: '/me/personal-info'
 		},
 		{
-			title: 'Order history',
+			title: () => m.nav_order_history(),
 			href: '/me/order-history'
 		},
-
 		{
-			title: 'Addresses',
+			title: () => m.nav_addresses(),
 			href: '/me/addresses'
 		},
 		{
-			title: 'Settings',
+			title: () => m.nav_settings(),
 			href: '/me/settings'
 		}
 	];
@@ -56,8 +56,8 @@ import LanguageSwitcher from './LanguageSwitcher.svelte';
 	)}
 >
 	<a href="/" class="text-2xl capitalize">
-		<span class="text-primary font-bold">Svelte</span>
-		store front</a
+		<span class="text-primary font-bold">Demo</span>
+		Svelte-Cloudflare</a
 	>
 
 	<div class="flex items-center gap-2 md:gap-6">
@@ -76,20 +76,20 @@ import LanguageSwitcher from './LanguageSwitcher.svelte';
 					<ChevronDown />
 				</DropdownMenu.Trigger>
 				<DropdownMenu.Content class="w-56">
-					<DropdownMenu.Label>My Account</DropdownMenu.Label>
+					<DropdownMenu.Label>{m.nav_my_account()}</DropdownMenu.Label>
 					<DropdownMenu.Separator />
 					<DropdownMenu.Group>
 						{#each accountPages as { title, href } (href)}
 							<DropdownMenu.Item>
 								{#snippet child({ props })}
-									<a {href} {...props}>{title}</a>
+									<a {href} {...props}>{title()}</a>
 								{/snippet}
 							</DropdownMenu.Item>
 						{/each}
 						{#if page.data.user.role === 'admin'}
 							<DropdownMenu.Item>
 								{#snippet child({ props })}
-									<a href="/admin" {...props}>Admin dashboard</a>
+									<a href="/admin" {...props}>{m.nav_admin_dashboard()}</a>
 								{/snippet}
 							</DropdownMenu.Item>
 						{/if}
@@ -100,14 +100,15 @@ import LanguageSwitcher from './LanguageSwitcher.svelte';
 						onclick={async () => {
 							await authClient.signOut();
 							invalidateAll();
-						}}>Log out</DropdownMenu.Item
+						}}>{m.action_logout()}</DropdownMenu.Item
 					>
 				</DropdownMenu.Content>
 			</DropdownMenu.Root>
 		{:else}
 			<div class="hidden items-center gap-2 md:flex">
-				<Button onclick={() => loginModalState.setTrue()} variant="ghost">Login</Button>
-				<Button onclick={() => registerModalState.setTrue()}>Register</Button>
+				<Button onclick={() => loginModalState.setTrue()} variant="ghost">{m.action_login()}</Button
+				>
+				<Button onclick={() => registerModalState.setTrue()}>{m.action_register()}</Button>
 			</div>
 			<button
 				onclick={() => {

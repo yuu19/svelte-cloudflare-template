@@ -9,6 +9,7 @@
 	import { toast } from 'svelte-sonner';
 	import { registerModalState } from '$lib/states/modalState.svelte';
 	import { authClient } from '$lib/auth-client';
+import { m } from '$lib/paraglide/messages.js';
 	const form = superForm(defaults(zod4(registerSchema)), {
 		SPA: true,
 		validators: zod4(registerSchema),
@@ -24,7 +25,7 @@
 					},
 					{
 						onSuccess(ctx) {
-							toast.success('A confirmation email has been sent. Please check your inbox.');
+							toast.success(m.register_success());
 							// toast.success('registration successful');
 							registerModalState.setFalse();
 						}
@@ -47,9 +48,9 @@
 <Dialog.Root bind:open={registerModalState.value}>
 	<Dialog.Content class="w-full  p-5">
 		<Dialog.Header class="mt-10">
-			<Dialog.Title class="font-display text-3xl ">Create an account</Dialog.Title>
+			<Dialog.Title class="font-display text-3xl ">{m.register_title()}</Dialog.Title>
 			<Dialog.Description>
-				Enter your email and password to log in. Click login when you're ready.
+				{m.register_desc()}
 			</Dialog.Description>
 		</Dialog.Header>
 
@@ -57,42 +58,42 @@
 			<Form.Field {form} name="name">
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>Name</Form.Label>
+						<Form.Label>{m.register_name_label()}</Form.Label>
 						<Input {...props} bind:value={$formData.name} />
 					{/snippet}
 				</Form.Control>
-				<Form.Description>This is your public display username.</Form.Description>
+				<Form.Description>{m.register_name_desc()}</Form.Description>
 				<Form.FieldErrors />
 			</Form.Field>
 
 			<Form.Field {form} name="email">
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>Email</Form.Label>
+						<Form.Label>{m.register_email_label()}</Form.Label>
 						<Input {...props} bind:value={$formData.email} />
 					{/snippet}
 				</Form.Control>
-				<Form.Description>This is your email address</Form.Description>
+				<Form.Description>{m.register_email_desc()}</Form.Description>
 				<Form.FieldErrors />
 			</Form.Field>
 			<Form.Field {form} name="password">
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>Password</Form.Label>
+						<Form.Label>{m.register_password_label()}</Form.Label>
 						<Input {...props} type="password" bind:value={$formData.password} />
 					{/snippet}
 				</Form.Control>
-				<Form.Description>Add your password</Form.Description>
+				<Form.Description>{m.register_password_desc()}</Form.Description>
 				<Form.FieldErrors />
 			</Form.Field>
 			<Form.Field {form} name="confirmPassword">
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>Confirm password</Form.Label>
+						<Form.Label>{m.register_confirm_password_label()}</Form.Label>
 						<Input {...props} type="password" bind:value={$formData.confirmPassword} />
 					{/snippet}
 				</Form.Control>
-				<Form.Description>confirm your password</Form.Description>
+				<Form.Description>{m.register_confirm_password_desc()}</Form.Description>
 				<Form.FieldErrors />
 			</Form.Field>
 
@@ -100,7 +101,7 @@
 				{#if $delayed}
 					<Loader2 class="h-6 w-6 animate-spin " />
 				{:else}
-					Register
+					{m.register_submit()}
 				{/if}
 			</Form.Button>
 		</form>

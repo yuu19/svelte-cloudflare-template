@@ -10,6 +10,7 @@
 	import { toast } from 'svelte-sonner';
 	import type { ActionData } from './$types';
 	import { addressModalState } from '$lib/states/modalState.svelte';
+	import { m } from '$lib/paraglide/messages.js';
 
 	let addresses = $derived(page.data.user.addresses);
 	let deleteModalState = $state(false);
@@ -20,15 +21,15 @@
 
 {#if addresses.length === 0}
 	<div class="flex h-[50vh] flex-col items-center justify-center text-center">
-		<h1 class="font-display text-3xl font-semibold">You haven't saved any addresses yet</h1>
-		<p class="text-muted-foreground mb-5 text-sm">Add a new address easily below</p>
-		<Button onclick={() => addressModalState.setTrue()}>Add new address</Button>
+		<h1 class="font-display text-3xl font-semibold">{m.addresses_empty_title()}</h1>
+		<p class="text-muted-foreground mb-5 text-sm">{m.addresses_empty_body()}</p>
+		<Button onclick={() => addressModalState.setTrue()}>{m.addresses_add_button()}</Button>
 	</div>
 {:else}
 	<div>
 		<div class="mb-2 ml-auto w-fit px-3">
 			<AddAddressModal />
-			<Button onclick={() => addressModalState.setTrue()}>Add new address</Button>
+			<Button onclick={() => addressModalState.setTrue()}>{m.addresses_add_button()}</Button>
 		</div>
 
 		<div class="mb-3 grid gap-5 lg:grid-cols-2">
@@ -45,10 +46,10 @@
 						</div>
 						<div class="mt-auto w-[150px] space-y-2">
 							{#if address.isDefaultShipping}
-								<Badge variant="secondary" class="uppercase">Shipping Address</Badge>
+								<Badge variant="secondary" class="uppercase">{m.addresses_shipping_badge()}</Badge>
 							{/if}
 							{#if address.isDefaultBilling}
-								<Badge variant="secondary" class=" uppercase">Billing Address</Badge>
+								<Badge variant="secondary" class=" uppercase">{m.addresses_billing_badge()}</Badge>
 							{/if}
 						</div>
 					</Card.Content>
@@ -89,17 +90,18 @@
 			<input type="number" name="id" value={addressId} hidden />
 			<AlertDialog.Header class="mt-10">
 				<AlertDialog.Title class="font-display text-lg sm:text-xl md:text-3xl  "
-					>Are you absolutely sure?</AlertDialog.Title
+					>{m.addresses_delete_title()}</AlertDialog.Title
 				>
 				<AlertDialog.Description>
-					This action cannot be undone. This will permanently delete this address and remove it data
-					from our servers.
+					{m.addresses_delete_body()}
 				</AlertDialog.Description>
 			</AlertDialog.Header>
 			<AlertDialog.Footer class="mt-5">
-				<AlertDialog.Cancel type="button" class="w-full">Cancel</AlertDialog.Cancel>
+				<AlertDialog.Cancel type="button" class="w-full"
+					>{m.addresses_delete_cancel()}</AlertDialog.Cancel
+				>
 				<AlertDialog.Action type="submit" class=" bg-destructive hover:bg-destructive/90 w-full">
-					Delete addresses</AlertDialog.Action
+					{m.addresses_delete_confirm()}</AlertDialog.Action
 				>
 			</AlertDialog.Footer>
 		</form>

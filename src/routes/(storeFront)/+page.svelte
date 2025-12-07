@@ -4,6 +4,7 @@
 	import Fade from 'embla-carousel-fade';
 	import Autoplay from 'embla-carousel-autoplay';
 	import SearchBar from '$lib/components/SearchBar.svelte';
+	import { m } from '$lib/paraglide/messages.js';
 
 	const carouselPics = ['/hero/hero-1.jpg', '/hero/hero-2.jpg', '/hero/hero-3.jpg'];
 </script>
@@ -15,7 +16,7 @@
 		class="relative w-full max-w-full"
 	>
 		<Carousel.Content>
-			{#each carouselPics as pic}
+			{#each carouselPics as pic (pic)}
 				<Carousel.Item>
 					<div
 						class="relative mx-auto h-[350px] overflow-clip rounded-lg bg-cover bg-center bg-no-repeat p-1 text-white md:h-[480px]"
@@ -24,12 +25,10 @@
 						<div class="absolute inset-0 bg-gradient-to-br from-black/20 to-black/80"></div>
 						<div class="absolute right-0 bottom-0 z-10 mb-14 px-5 md:mb-20 md:px-10">
 							<h1 class="mb-1 text-2xl font-bold text-white md:mb-3 md:text-6xl">
-								Goods and more delivered to your door
+								{m.hero_title()}
 							</h1>
 							<p class=" mb-2 text-sm md:mb-5 md:text-lg">
-								Discover, explore, and enjoy on-demand delivery from this store and more. Shop now
-								and get access to a wide range of products, including electronics, fashion, home
-								goods, and much more.
+								{m.hero_body()}
 							</p>
 						</div>
 					</div>
@@ -40,12 +39,10 @@
 	</Carousel.Root>
 
 	<section class="mt-20">
-		<h2 class="text-2xl font-bold md:text-4xl">What We offer</h2>
+		<h2 class="text-2xl font-bold md:text-4xl">{m.offer_title()}</h2>
 		<p class="text-muted-foreground mt-2 text-sm md:mt-3 md:text-base">
-			With our fast and reliable delivery service, you can have your favorite items delivered right
-			to your doorstep. Start shopping today and experience the convenience of online shopping with
-			us.
+			{m.offer_body()}
 		</p>
-		<Button href="/search" class="my-4 md:my-7">Explore products now</Button>
+		<Button href="/search" class="my-4 md:my-7">{m.cta_explore_products()}</Button>
 	</section>
 </div>

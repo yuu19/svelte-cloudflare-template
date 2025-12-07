@@ -12,24 +12,33 @@ export async function getProducts({
 	categoryId?: number;
 	subCategories?: string[];
 }) {
-	const products = await db.query.productTable.findMany({
-		with: {
-			category: true
-		},
-		orderBy: (product, { desc }) => desc(product.createdAt),
-		where: (t, { like, or, and, eq, inArray }) =>
-			and(
-				or(like(t.name, `%${term}%`), like(t.description, `%${term}%`)),
-				categoryId ? eq(t.categoryId, categoryId) : undefined,
-				subCategories && subCategories.length > 0
-					? inArray(t.subCategory, subCategories)
-					: undefined
-			)
-	});
-	const categories = Array.from(
-		new Map(products.map((item) => [item.category.id, item.category])).values()
-	);
-	return { products, categories };
+	// Normalize and defensively bound the search term to avoid pathological LIKE patterns
+	const normalizedTerm = (term ?? '').trim().slice(0, 100);
+	const likeTerm = normalizedTerm ? `%${normalizedTerm}%` : undefined;
+
+	try {
+		const products = await db.query.productTable.findMany({
+			with: {
+				category: true
+			},
+			orderBy: (product, { desc }) => desc(product.createdAt),
+			where: (t, { like, or, and, eq, inArray }) =>
+				and(
+					likeTerm ? or(like(t.name, likeTerm), like(t.description, likeTerm)) : undefined,
+					categoryId ? eq(t.categoryId, categoryId) : undefined,
+					subCategories && subCategories.length > 0
+						? inArray(t.subCategory, subCategories)
+						: undefined
+				)
+		});
+		const categories = Array.from(
+			new Map(products.map((item) => [item.category.id, item.category])).values()
+		);
+		return { products, categories };
+	} catch (error) {
+		console.error('getProducts failed', { term: normalizedTerm, error });
+		return { products: [], categories: [] };
+	}
 }
 
 export async function getUsers(db: DrizzleD1Database<typeof schema>) {

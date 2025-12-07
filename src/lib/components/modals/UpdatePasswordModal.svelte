@@ -11,6 +11,7 @@
 	import { defaults, superForm } from 'sveltekit-superforms/client';
 	import { toast } from 'svelte-sonner';
 	import { zod4 } from 'sveltekit-superforms/adapters';
+import { m } from '$lib/paraglide/messages.js';
 	let modalState = $state(false);
 	const form = superForm(defaults(zod4(updatePasswordSchema)), {
 		SPA: true,
@@ -27,7 +28,7 @@
 
 					{
 						onSuccess(ctx) {
-							toast.success('password updated successfully');
+							toast.success(m.update_password_success());
 							modalState = false;
 						}
 					}
@@ -48,50 +49,50 @@
 </script>
 
 <Dialog.Root bind:open={modalState}>
-	<Dialog.Trigger class={buttonVariants({ variant: 'link' })}>Change Password</Dialog.Trigger>
+	<Dialog.Trigger class={buttonVariants({ variant: 'link' })}>{m.update_password_trigger()}</Dialog.Trigger>
 	<Dialog.Content class="w-full p-3 sm:p-5">
 		<Dialog.Header class="mt-10">
-			<Dialog.Title class="font-display text-3xl ">Change Password</Dialog.Title>
+			<Dialog.Title class="font-display text-3xl ">{m.update_password_title()}</Dialog.Title>
 		</Dialog.Header>
 		<form method="post" use:enhance>
 			<Form.Field {form} name="currentPassword">
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>Current Password</Form.Label>
+						<Form.Label>{m.update_password_current_label()}</Form.Label>
 						<Input type="password" {...props} bind:value={$formData.currentPassword} />
 					{/snippet}
 				</Form.Control>
-				<Form.Description>Your current password</Form.Description>
+				<Form.Description>{m.update_password_current_desc()}</Form.Description>
 				<Form.FieldErrors />
 			</Form.Field>
 			<Form.Field {form} name="newPassword">
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>New Password</Form.Label>
+						<Form.Label>{m.update_password_new_label()}</Form.Label>
 
 						<Input type="password" {...props} bind:value={$formData.newPassword} />
 					{/snippet}
 				</Form.Control>
-				<Form.Description>Your new password</Form.Description>
+				<Form.Description>{m.update_password_new_desc()}</Form.Description>
 				<Form.FieldErrors />
 			</Form.Field>
 
 			<Form.Field {form} name="confirmNewPassword">
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>Confirm New Password</Form.Label>
+						<Form.Label>{m.update_password_confirm_label()}</Form.Label>
 
 						<Input type="password" {...props} bind:value={$formData.confirmNewPassword} />
 					{/snippet}
 				</Form.Control>
-				<Form.Description>Confirm your new password</Form.Description>
+				<Form.Description>{m.update_password_confirm_desc()}</Form.Description>
 				<Form.FieldErrors />
 			</Form.Field>
 			<Form.Button class="mt-2 w-full"
 				>{#if $delayed}
 					<Loader2 class="size-6 animate-spin " />
 				{:else}
-					Change Password
+					{m.update_password_submit()}
 				{/if}</Form.Button
 			>
 		</form>
