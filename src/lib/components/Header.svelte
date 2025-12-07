@@ -19,7 +19,8 @@
 	import ResetPasswordModal from './modals/ResetPasswordModal.svelte';
 	import CartSheet from './modals/CartSheet.svelte';
 	import MobileAuth from './modals/MobileAuth.svelte';
-	import { page } from '$app/state';
+import { page } from '$app/state';
+import LanguageSwitcher from './LanguageSwitcher.svelte';
 
 	function getUserInitial(name: string) {
 		return name
@@ -117,6 +118,8 @@
 				<Menu class="size-6 " />
 			</button>
 		{/if}
+
+		<LanguageSwitcher />
 
 		{#if page.data?.user?.cart?.cartItems}
 			<button onclick={() => cartSheetState.setTrue()} class="relative inline-block h-fit w-fit">

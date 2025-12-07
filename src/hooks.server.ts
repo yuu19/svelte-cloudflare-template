@@ -1,3 +1,4 @@
+import { paraglideMiddleware } from '$lib/paraglide/server';
 import * as Sentry from '@sentry/sveltekit';
 import { sentryHandle, initCloudflareSentryHandle } from '@sentry/sveltekit';
 import { redirect, type Handle } from '@sveltejs/kit';
@@ -10,18 +11,19 @@ import { drizzle as drizzleSqlite } from 'drizzle-orm/better-sqlite3';
 import * as schema from '$lib/server/db/schema';
 
 const protectedUserRoutes = ['/me', '/checkout'];
+
 const handleAuth: Handle = async ({ event, resolve }) => {
 	const { locals, url, request } = event;
 	const { db } = locals;
 	const auth = createAuth(db);
-	const session = await auth.api.getSession({
-		headers: request.headers
-	});
+	const session = await auth.api.getSession({ headers: request.headers });
 
 	if (url.pathname.startsWith('/admin') && session?.user.role !== 'admin') {
 		redirect(303, '/');
 	}
+
 	const isProtectedUserRoute = protectedUserRoutes.some((route) => url.pathname.startsWith(route));
+
 	if (isProtectedUserRoute && !session) {
 		redirect(303, '/');
 	}
@@ -31,6 +33,7 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 
 export const handleDb: Handle = async ({ event, resolve }) => {
 	const platform = event.platform;
+
 	if (platform) {
 		const db = createDb(platform.env.DB);
 
@@ -40,6 +43,7 @@ export const handleDb: Handle = async ({ event, resolve }) => {
 		// local dev fallback to file-based sqlite
 		const sqlite = new Database('local.db');
 		const db = drizzleSqlite(sqlite, { schema });
+
 		event.locals.db = db as any;
 	}
 
@@ -47,12 +51,11 @@ export const handleDb: Handle = async ({ event, resolve }) => {
 };
 
 const preloadFonts: Handle = async ({ event, resolve }) => {
-	const response = await resolve(event, {
-		preload: ({ type }) => type === 'font'
-	});
+	const response = await resolve(event, { preload: ({ type }) => type === 'font' });
 
 	return response;
 };
+
 const serverDsn = process.env.SENTRY_DSN;
 const sentryHandleConfigured: Handle | undefined = serverDsn
 	? initCloudflareSentryHandle({
@@ -68,10 +71,21 @@ const sentryHandleConfigured: Handle | undefined = serverDsn
 	: undefined;
 const noopHandle: Handle = async ({ event, resolve }) => resolve(event);
 
+
+const handleParaglide: Handle = ({ event, resolve }) =>
+	paraglideMiddleware(event.request, ({ request, locale }) => {
+		event.request = request;
+
+		return resolve(event, {
+			transformPageChunk: ({ html }) => html.replace('%paraglide.lang%', locale)
+		});
+	});
+
 export const handle = sequence(
 	sentryHandleConfigured ?? noopHandle,
 	sentryHandle(),
 	preloadFonts,
 	handleDb,
-	handleAuth
+	handleAuth,
+	handleParaglide
 );

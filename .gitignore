@@ -36,3 +36,6 @@ vite.config.ts.timestamp-*
 *.tfstate.*
 terraform.tfvars
 wrangler.generated.toml
+
+# Paraglide
+src/lib/paraglide
